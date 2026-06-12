@@ -783,6 +783,17 @@ body.header-sticky-active { padding-top: 68px; }
 /* ============================================================
    HOME SECTIONS — by metro line
    ============================================================ */
+.home-h1 {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--muted, #666);
+  margin: 0 0 28px;
+  padding-bottom: 0;
+  border: none;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
 .home-section { margin-bottom: 48px; }
 
 .section-title {
