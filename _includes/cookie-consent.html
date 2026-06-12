@@ -1,0 +1,97 @@
+<!-- ============================================================
+     Google Consent Mode v2 — MUST load before gtag.js / AdSense
+     ============================================================ -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+
+  // Step 1: Deny everything by default (LGPD / AdSense requirement)
+  gtag('consent', 'default', {
+    'ad_storage':              'denied',
+    'ad_user_data':            'denied',
+    'ad_personalization':      'denied',
+    'analytics_storage':       'denied',
+    'functionality_storage':   'denied',
+    'personalization_storage': 'denied',
+    'security_storage':        'granted',
+    'wait_for_update':         500
+  });
+
+  // Step 2: If user already accepted in a previous visit, restore immediately
+  (function() {
+    try {
+      if (localStorage.getItem('rmCookieConsent') === 'granted') {
+        gtag('consent', 'update', {
+          'ad_storage':              'granted',
+          'ad_user_data':            'granted',
+          'ad_personalization':      'granted',
+          'analytics_storage':       'granted',
+          'functionality_storage':   'granted',
+          'personalization_storage': 'granted'
+        });
+      }
+    } catch(e) {}
+  })();
+</script>
+
+<!-- ============================================================
+     Google Analytics 4 — Measurement ID: G-1Y6GXE8YRE
+     ============================================================ -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1Y6GXE8YRE"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config', 'G-1Y6GXE8YRE', {
+    'anonymize_ip': true,
+    'cookie_flags': 'SameSite=None;Secure'
+  });
+</script>
+
+<!-- ============================================================
+     Google AdSense — pub-8788390571817119
+     Loads after consent defaults are set (Consent Mode v2 compliant)
+     ============================================================ -->
+<script async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8788390571817119"
+  crossorigin="anonymous"></script>
+
+<!-- ============================================================
+     Cookie Banner
+     ============================================================ -->
+<div id="cookie-banner" style="display:none;" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
+  <p>
+    Usamos cookies e tecnologias semelhantes — incluindo Google Analytics, Google AdSense e Microsoft Bing — para analisar o tráfego, personalizar conteúdo e exibir anúncios relevantes. Ao aceitar, você concorda com nossa
+    <a href="/p/politica-de-privacidade.html">Política de Privacidade</a>.
+  </p>
+  <div class="cookie-buttons">
+    <button class="btn-cookie-accept" id="cookie-accept">Aceitar cookies</button>
+    <button class="btn-cookie-decline" id="cookie-decline">Recusar</button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // Show banner only if user hasn't chosen yet
+    try {
+      if (!localStorage.getItem('rmCookieConsent')) {
+        document.getElementById('cookie-banner').style.display = 'flex';
+      }
+    } catch(e) {}
+
+    function updateConsent(granted) {
+      var val = granted ? 'granted' : 'denied';
+      gtag('consent', 'update', {
+        'ad_storage':              val,
+        'ad_user_data':            val,
+        'ad_personalization':      val,
+        'analytics_storage':       val,
+        'functionality_storage':   val,
+        'personalization_storage': val
+      });
+      try { localStorage.setItem('rmCookieConsent', granted ? 'granted' : 'denied'); } catch(e) {}
+      document.getElementById('cookie-banner').style.display = 'none';
+    }
+
+    document.getElementById('cookie-accept').addEventListener('click', function(){ updateConsent(true); });
+    document.getElementById('cookie-decline').addEventListener('click', function(){ updateConsent(false); });
+  })();
+</script>

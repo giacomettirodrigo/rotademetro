@@ -1,0 +1,65 @@
+title: "Rota de Metrô"
+description: "Roteiros de São Paulo saindo do metrô: museus, parques, gastronomia e cultura acessíveis por metrô ou CPTM."
+url: "https://www.rotademetro.com.br"
+baseurl: ""
+
+author: "Rodrigo Giacometti"
+lang: pt-BR
+timezone: America/Sao_Paulo
+
+# Permalink — must match Blogger's URL structure exactly to preserve SEO
+permalink: /:year/:month/:title.html
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+# Plugins
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-feed
+
+# jekyll-feed config
+feed:
+  path: feed.xml
+
+# Sitemap settings (jekyll-sitemap)
+sitemap:
+  exclude:
+    - /p/politica-de-privacidade.html
+    - /p/contato.html
+
+# SEO tag defaults
+twitter:
+  card: summary_large_image
+
+social:
+  name: Rota de Metrô
+  links:
+    - https://www.rotademetro.com.br
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Rodrigo Giacometti"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - scripts/
+  - "*.sh"
+  - vendor/

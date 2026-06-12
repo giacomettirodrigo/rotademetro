@@ -1,0 +1,71 @@
+---
+layout: default
+---
+
+{% assign lines  = "Linha 1 Azul|Linha 2 Verde|Linha 3 Vermelha|Linha 4 Amarela|Linha 5 Lilás" | split: "|" %}
+{% assign colors = "#1D70B8|#007A3D|#CC1020|#FFB800|#9B59B6" | split: "|" %}
+
+<div class="home">
+
+  <!-- ── Recent posts ─────────────────────────── -->
+  <section class="home-section">
+    <h2 class="section-title">Últimas postagens</h2>
+    <div class="post-list">
+      {% for post in site.posts limit:6 %}
+      <article class="post-card">
+        {% if post.image %}
+        <a href="{{ post.url | prepend: site.baseurl }}" class="post-card-image-link">
+          <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+        </a>
+        {% endif %}
+        <div class="post-card-body">
+          {% if post.labels %}
+          <div class="post-card-tags">{% for tag in post.labels limit:2 %}{% if tag contains "Linha" %}<span class="card-line-tag card-line-tag--{{ tag | remove: 'Linha ' | split: ' ' | first | downcase }}">{{ tag }}</span>{% endif %}{% endfor %}</div>
+          {% endif %}
+          <h3 class="post-card-title">
+            <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+          </h3>
+          <p class="post-card-excerpt">{{ post.description | default: post.excerpt | strip_html | truncate: 160 }}</p>
+          <a href="{{ post.url | prepend: site.baseurl }}" class="read-more">Leia mais »</a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    <div style="text-align:center; margin-top:20px;">
+      <a href="{{ '/todos-os-posts.html' | prepend: site.baseurl }}" class="btn-all-posts">Ver todos os posts →</a>
+    </div>
+  </section>
+
+  <!-- ── Browse by metro line ──────────────────── -->
+  {% for line in lines %}
+  {% assign line_color = colors[forloop.index0] %}
+  {% assign line_posts = site.posts | where_exp: "p", "p.labels contains line" %}
+  {% if line_posts.size > 0 %}
+  <section class="home-section line-section">
+    <h2 class="section-title line-title">
+      <span class="line-dot" style="background:{{ line_color }}"></span>
+      {{ line }}
+    </h2>
+    <div class="post-list">
+      {% for post in line_posts %}
+      <article class="post-card">
+        {% if post.image %}
+        <a href="{{ post.url | prepend: site.baseurl }}" class="post-card-image-link">
+          <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+        </a>
+        {% endif %}
+        <div class="post-card-body">
+          <h3 class="post-card-title">
+            <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+          </h3>
+          <p class="post-card-excerpt">{{ post.description | default: post.excerpt | strip_html | truncate: 160 }}</p>
+          <a href="{{ post.url | prepend: site.baseurl }}" class="read-more">Leia mais »</a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+  {% endfor %}
+
+</div>

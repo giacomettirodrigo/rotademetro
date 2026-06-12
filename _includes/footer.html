@@ -1,0 +1,21 @@
+<footer class="site-footer">
+  <div class="footer-inner">
+    <!-- Line color strip -->
+    <div class="footer-lines">
+      <span style="background:#1D70B8" title="Linha 1 Azul"></span>
+      <span style="background:#007A3D" title="Linha 2 Verde"></span>
+      <span style="background:#CC1020" title="Linha 3 Vermelha"></span>
+      <span style="background:#FFB800" title="Linha 4 Amarela"></span>
+      <span style="background:#9B59B6" title="Linha 5 Lilás"></span>
+    </div>
+    <nav class="footer-nav">
+      <a href="{{ '/' | prepend: site.baseurl }}">Início</a>
+      <a href="{{ '/todos-os-posts.html' | prepend: site.baseurl }}">Todos os Posts</a>
+      <a href="{{ '/p/sobre.html' | prepend: site.baseurl }}">Sobre</a>
+      <a href="{{ '/p/contato.html' | prepend: site.baseurl }}">Contato</a>
+      <a href="{{ '/p/busca-por-estacao.html' | prepend: site.baseurl }}">Busca por Estação</a>
+      <a href="{{ '/p/politica-de-privacidade.html' | prepend: site.baseurl }}">Política de Privacidade</a>
+    </nav>
+    <p class="footer-copy">© {{ site.time | date: "%Y" }} {{ site.title }} · São Paulo, Brasil</p>
+  </div>
+</footer>

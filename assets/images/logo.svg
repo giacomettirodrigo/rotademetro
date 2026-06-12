@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- Orange border -->
+  <circle cx="60" cy="60" r="58" fill="#E05000"/>
+
+  <!-- Dark navy fill -->
+  <circle cx="60" cy="60" r="51" fill="#1C2B3A"/>
+
+  <!-- Bold geometric M — centered in circle -->
+  <!-- Left outer vertical -->
+  <rect x="22" y="30" width="12" height="58" fill="white"/>
+  <!-- Right outer vertical -->
+  <rect x="86" y="30" width="12" height="58" fill="white"/>
+  <!-- Left diagonal: top of left stroke → V tip at center -->
+  <polygon points="22,30 34,30 65,74 53,74" fill="white"/>
+  <!-- Right diagonal: top of right stroke → V tip at center -->
+  <polygon points="86,30 98,30 67,74 55,74" fill="white"/>
+</svg>

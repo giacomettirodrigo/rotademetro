@@ -1,0 +1,175 @@
+<header class="site-header" id="site-header">
+
+  <!-- ── Main bar ───────────────────────────────── -->
+  <div class="header-inner">
+    <a class="site-logo" href="{{ '/' | prepend: site.baseurl }}">
+      <img src="{{ '/assets/images/logo.png' | prepend: site.baseurl }}" alt="{{ site.title }}" width="44" height="44">
+    </a>
+    <div class="site-branding">
+      <a class="site-title" href="{{ '/' | prepend: site.baseurl }}">{{ site.title }}</a>
+    </div>
+
+    <!-- Desktop search -->
+    <div class="header-search site-search" id="desktop-search">
+      <span style="color:rgba(255,255,255,0.5); font-size:1rem; line-height:1;">&#128269;</span>
+      <input type="text" class="search-input" placeholder="Buscar estação ou ponto..." autocomplete="off" aria-label="Buscar no site" aria-expanded="false" aria-haspopup="listbox">
+      <div class="search-results" role="listbox" aria-label="Resultados da busca"></div>
+    </div>
+
+    <!-- Desktop nav -->
+    <nav class="site-nav">
+      <a href="{{ '/' | prepend: site.baseurl }}">Início</a>
+      <a href="{{ '/todos-os-posts.html' | prepend: site.baseurl }}">Posts</a>
+      <a href="{{ '/p/sobre.html' | prepend: site.baseurl }}">Sobre</a>
+      <a href="{{ '/p/contato.html' | prepend: site.baseurl }}">Contato</a>
+    </nav>
+
+    <!-- Mobile hamburger -->
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+  </div>
+
+  <!-- ── Mobile search bar (always visible on mobile) ── -->
+  <div class="mobile-search-bar">
+    <div class="site-search" id="mobile-search">
+      <span style="color:rgba(255,255,255,0.5); font-size:1rem; line-height:1; flex-shrink:0;">&#128269;</span>
+      <input type="text" class="search-input" placeholder="Estações, pontos de interesse..." autocomplete="off" aria-label="Buscar no site">
+      <div class="search-results" role="listbox" aria-label="Resultados da busca"></div>
+    </div>
+  </div>
+
+  <!-- ── Mobile dropdown nav ────────────────────── -->
+  <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <a href="{{ '/' | prepend: site.baseurl }}">Início</a>
+    <a href="{{ '/todos-os-posts.html' | prepend: site.baseurl }}">Todos os Posts</a>
+    <a href="{{ '/p/sobre.html' | prepend: site.baseurl }}">Sobre</a>
+    <a href="{{ '/p/contato.html' | prepend: site.baseurl }}">Contato</a>
+    <a href="{{ '/p/politica-de-privacidade.html' | prepend: site.baseurl }}">Política de Privacidade</a>
+  </nav>
+
+</header>
+
+<script>
+(function() {
+  var INDEX_URL = '{{ "/search.json" | prepend: site.baseurl }}';
+  var searchData = null;
+
+  function loadIndex(cb) {
+    if (searchData) { cb(); return; }
+    fetch(INDEX_URL)
+      .then(function(r){ return r.json(); })
+      .then(function(data){ searchData = data; cb(); })
+      .catch(function(){});
+  }
+
+  function normalise(str) {
+    return (str || '').toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '');
+  }
+
+  function search(query) {
+    var q = normalise(query);
+    if (q.length < 2) return [];
+    return searchData.filter(function(p) {
+      return normalise(p.title).includes(q) ||
+             normalise(p.description).includes(q) ||
+             normalise(p.labels).includes(q);
+    }).slice(0, 6);
+  }
+
+  function renderResults(results, container, query) {
+    if (!results.length) {
+      container.innerHTML = '<div class="search-no-results">Nenhum resultado para "' + query + '"</div>';
+    } else {
+      container.innerHTML = results.map(function(p) {
+        var hi = p.title.replace(
+          new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi'),
+          '<mark>$1</mark>'
+        );
+        return '<a class="search-result-item" href="' + p.url + '">' +
+          '<span class="search-result-title">' + hi + '</span>' +
+          (p.labels ? '<span class="search-result-label">' + p.labels.split(',')[0] + '</span>' : '') +
+          '</a>';
+      }).join('');
+    }
+    container.classList.add('is-open');
+  }
+
+  function initSearch(wrapper) {
+    var input     = wrapper.querySelector('.search-input');
+    var container = wrapper.querySelector('.search-results');
+
+    input.addEventListener('input', function() {
+      var q = this.value.trim();
+      if (q.length < 2) { container.classList.remove('is-open'); return; }
+      loadIndex(function() {
+        renderResults(search(q), container, q);
+      });
+    });
+
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        var first = container.querySelector('.search-result-item');
+        if (first) { window.location = first.href; }
+        e.preventDefault();
+      }
+      if (e.key === 'Escape') {
+        container.classList.remove('is-open');
+        input.value = '';
+      }
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!wrapper.contains(e.target)) {
+        container.classList.remove('is-open');
+      }
+    });
+  }
+
+  // Init both desktop and mobile search
+  document.querySelectorAll('.site-search').forEach(initSearch);
+
+  /* ── Hamburger ─────────────────────────────────── */
+  var btn  = document.getElementById('mobile-menu-btn');
+  var nav  = document.getElementById('mobile-nav');
+  var open = false;
+
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    open = !open;
+    btn.setAttribute('aria-expanded', open);
+    nav.setAttribute('aria-hidden', !open);
+    btn.classList.toggle('is-open', open);
+    nav.classList.toggle('is-open', open);
+  });
+
+  document.addEventListener('click', function(e) {
+    if (open && !nav.contains(e.target) && e.target !== btn) {
+      open = false;
+      btn.setAttribute('aria-expanded', false);
+      nav.setAttribute('aria-hidden', true);
+      btn.classList.remove('is-open');
+      nav.classList.remove('is-open');
+    }
+  });
+
+  nav.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      open = false;
+      btn.classList.remove('is-open');
+      nav.classList.remove('is-open');
+    });
+  });
+
+  /* ── Sticky header ─────────────────────────────── */
+  var header = document.getElementById('site-header');
+  window.addEventListener('scroll', function() {
+    var sticky = window.scrollY > 10;
+    header.classList.toggle('is-sticky', sticky);
+    document.body.classList.toggle('header-sticky-active', sticky);
+  }, { passive: true });
+})();
+</script>

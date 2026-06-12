@@ -1,0 +1,134 @@
+---
+layout: default
+title: "Todos os Posts — Rota de Metrô"
+description: "Explore todos os roteiros de metrô de São Paulo: museus, parques, gastronomia, cultura e pontos turísticos acessíveis por metrô."
+permalink: /todos-os-posts.html
+---
+
+<div class="page-content" style="max-width:960px; padding:32px 20px 56px;">
+  <h1 style="font-size:1.7rem; color:var(--dark); margin-bottom:6px;">Todos os Posts</h1>
+  <p style="font-family:Arial,sans-serif; font-size:0.9rem; color:var(--muted); margin-bottom:32px;">{{ site.posts | size }} roteiros publicados — encontre o que fazer saindo de cada estação de metrô em São Paulo.</p>
+
+  {% assign lines  = "Linha 1 Azul|Linha 2 Verde|Linha 3 Vermelha|Linha 4 Amarela|Linha 5 Lilás" | split: "|" %}
+  {% assign colors = "#1D70B8|#007A3D|#CC1020|#FFB800|#9B59B6" | split: "|" %}
+
+  <!-- Group by line first -->
+  {% for line in lines %}
+  {% assign line_color = colors[forloop.index0] %}
+  {% assign line_posts = site.posts | where_exp: "p", "p.labels contains line" %}
+  {% if line_posts.size > 0 %}
+  <div class="archive-section">
+    <h2 class="archive-line-title">
+      <span class="line-dot" style="background:{{ line_color }}; width:12px; height:12px;"></span>
+      {{ line }}
+      <span class="archive-count">{{ line_posts.size }}</span>
+    </h2>
+    <ul class="archive-list">
+      {% for post in line_posts %}
+      <li class="archive-item">
+        <a href="{{ post.url | prepend: site.baseurl }}" class="archive-link">{{ post.title }}</a>
+        <span class="archive-tags">
+          {% for tag in post.labels %}
+            {% unless tag contains "Linha" %}<span class="archive-tag">{{ tag }}</span>{% endunless %}
+          {% endfor %}
+        </span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  {% endfor %}
+
+  <!-- Unlabelled / other posts -->
+  {% assign all_lined = "" | split: "" %}
+  {% for line in lines %}
+    {% assign lp = site.posts | where_exp: "p", "p.labels contains line" %}
+    {% for post in lp %}
+      {% unless all_lined contains post.url %}
+        {% assign all_lined = all_lined | push: post.url %}
+      {% endunless %}
+    {% endfor %}
+  {% endfor %}
+
+  {% assign has_others = false %}
+  {% for post in site.posts %}
+    {% unless all_lined contains post.url %}
+      {% assign has_others = true %}
+    {% endunless %}
+  {% endfor %}
+
+  {% if has_others %}
+  <div class="archive-section">
+    <h2 class="archive-line-title">
+      <span class="line-dot" style="background:#888; width:12px; height:12px;"></span>
+      Outros Roteiros
+    </h2>
+    <ul class="archive-list">
+      {% for post in site.posts %}
+        {% unless all_lined contains post.url %}
+        <li class="archive-item">
+          <a href="{{ post.url | prepend: site.baseurl }}" class="archive-link">{{ post.title }}</a>
+        </li>
+        {% endunless %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</div>
+
+<style>
+.archive-section { margin-bottom: 36px; }
+.archive-line-title {
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.archive-count {
+  font-size: 0.75rem;
+  background: var(--border);
+  color: var(--muted);
+  border-radius: 10px;
+  padding: 1px 8px;
+  margin-left: 4px;
+}
+.archive-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.archive-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+.archive-link {
+  font-family: Georgia, serif;
+  font-size: 0.97rem;
+  color: var(--dark);
+  flex: 1;
+}
+.archive-link:hover { color: var(--accent); text-decoration: none; }
+.archive-tags { display: flex; gap: 5px; flex-wrap: wrap; flex-shrink: 0; }
+.archive-tag {
+  font-family: Arial, sans-serif;
+  font-size: 0.68rem;
+  background: #EEF2FF;
+  color: #3730A3;
+  padding: 1px 7px;
+  border-radius: 8px;
+}
+</style>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  {% include head.html %}
+</head>
+<body>
+  {% include cookie-consent.html %}
+  {% include header.html %}
+  <main id="main" class="main-content">
+    {{ content }}
+  </main>
+  {% include footer.html %}
+
+  <!-- Secure all external links — rel="noopener noreferrer" -->
+  <script>
+  document.querySelectorAll('a[href^="http"]').forEach(function(a){
+    if(a.hostname !== location.hostname){
+      a.setAttribute('rel','noopener noreferrer');
+      if(!a.hasAttribute('target')) a.setAttribute('target','_blank');
+    }
+  });
+  </script>
+
+  <!-- Site-wide Organization structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ site.title }}",
+    "url": "{{ site.url }}",
+    "description": "{{ site.description }}",
+    "inLanguage": "pt-BR",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.google.com/search?q=site:www.rotademetro.com.br+{search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+</body>
+</html>
