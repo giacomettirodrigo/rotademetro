@@ -4,6 +4,10 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  schedule:
+    - cron: '23 10 * * 2'   # Tuesday ~10:23 UTC
+    - cron: '47 13 * * 4'   # Thursday ~13:47 UTC
+    - cron: '11 9 * * 6'    # Saturday ~9:11 UTC
 
 permissions:
   contents: read
