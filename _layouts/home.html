@@ -20,7 +20,7 @@ layout: default
         {% endif %}
         <div class="post-card-body">
           {% if post.labels %}
-          <div class="post-card-tags">{% for tag in post.labels limit:2 %}{% if tag contains "Linha" %}<span class="card-line-tag card-line-tag--{{ tag | remove: 'Linha ' | split: ' ' | first | downcase }}">{{ tag }}</span>{% endif %}{% endfor %}</div>
+          <div class="post-card-tags">{% for tag in post.labels %}{% if tag contains "Linha" %}<span class="card-line-tag card-line-tag--{{ tag | remove: 'Linha ' | split: ' ' | first | downcase }}">{{ tag }}</span>{% endif %}{% endfor %}</div>
           {% endif %}
           <h3 class="post-card-title">
             <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
