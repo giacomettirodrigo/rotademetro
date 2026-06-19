@@ -140,6 +140,18 @@ layout: default
   })();
   </script>
 
+  <!-- Responsive tables: wrap every table in .table-wrap -->
+  <script>
+  document.querySelectorAll('.post-content table').forEach(function(t) {
+    if (!t.parentElement.classList.contains('table-wrap')) {
+      var w = document.createElement('div');
+      w.className = 'table-wrap';
+      t.parentNode.insertBefore(w, t);
+      w.appendChild(t);
+    }
+  });
+  </script>
+
   <!-- Related posts by same line -->
   {% if page.labels %}
   {% assign line_label = "" %}
