@@ -636,6 +636,7 @@ body.header-sticky-active { padding-top: 68px; }
 /* ============================================================
    STICKY SHARE BAR
    ============================================================ */
+/* Mobile: slides up from bottom */
 .share-sticky {
   position: fixed;
   bottom: 0;
@@ -660,18 +661,27 @@ body.header-sticky-active { padding-top: 68px; }
   pointer-events: auto;
 }
 
-/* On wider screens: vertical sidebar instead of bottom bar */
+/* Desktop: vertical pill, fixed right side, vertically centered */
 @media (min-width: 900px) {
   .share-sticky {
     left: auto;
-    right: 24px;
-    bottom: 120px;
-    top: auto;
+    bottom: auto;
+    right: 20px;
+    top: 50%;
+    transform: translateX(120%) translateY(-50%);
+    transition: transform 0.3s cubic-bezier(.4,0,.2,1), opacity 0.3s ease;
     flex-direction: column;
     width: 52px;
     border-radius: 28px;
     padding: 12px 8px;
     gap: 6px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    opacity: 0;
+  }
+  .share-sticky.is-visible {
+    transform: translateX(0) translateY(-50%);
+    opacity: 1;
+    pointer-events: auto;
   }
 }
 
