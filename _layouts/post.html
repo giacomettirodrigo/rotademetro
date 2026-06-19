@@ -128,15 +128,7 @@ layout: default
       });
     }
 
-    // Show sticky bar after scrolling past inline share section
-    var shareSection = document.querySelector('.share-section');
-    var stickyBar    = document.getElementById('share-sticky');
-    if (shareSection && stickyBar) {
-      window.addEventListener('scroll', function() {
-        var rect = shareSection.getBoundingClientRect();
-        stickyBar.classList.toggle('is-visible', rect.bottom < 0);
-      }, { passive: true });
-    }
+    // Sticky share bar is always visible — no scroll trigger needed
   })();
   </script>
 
