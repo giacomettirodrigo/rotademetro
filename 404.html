@@ -6,6 +6,22 @@ permalink: /404.html
 sitemap: false
 ---
 
+<script>
+(function() {
+  var path = window.location.pathname;
+  // Redirect old Blogger label pages → todos-os-posts
+  if (path.indexOf('/search/label/') === 0) {
+    window.location.replace('/todos-os-posts.html');
+    return;
+  }
+  // Strip ?m=1 mobile parameter and retry
+  if (window.location.search.indexOf('m=1') !== -1) {
+    window.location.replace(path);
+    return;
+  }
+})();
+</script>
+
 <div class="page-content" style="max-width:760px; text-align:center; padding: 60px 40px;">
   <div style="font-size:5rem; margin-bottom:16px;">🚇</div>
   <h1 style="font-size:2rem; color:var(--dark); margin-bottom:12px;">Esta estação não existe</h1>

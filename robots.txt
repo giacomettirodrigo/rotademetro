@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /feeds/
+Disallow: /search/
 
 Sitemap: https://www.rotademetro.com.br/sitemap.xml
