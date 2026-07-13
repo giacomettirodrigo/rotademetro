@@ -7,6 +7,9 @@
 <!-- Canonical — critical for SEO authority preservation -->
 <link rel="canonical" href="{{ page.url | prepend: site.url }}">
 
+<!-- RSS feed autodiscovery (jekyll-feed) -->
+{% feed_meta %}
+
 <!-- Open Graph -->
 <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
 <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
