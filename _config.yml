@@ -3,7 +3,7 @@ description: "Roteiros de São Paulo saindo do metrô: museus, parques, gastrono
 url: "https://www.rotademetro.com.br"
 baseurl: ""
 
-author: "Rodrigo Giacometti"
+author: "Rota de Metrô"
 lang: pt-BR
 timezone: America/Sao_Paulo
 
@@ -49,7 +49,7 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-      author: "Rodrigo Giacometti"
+      author: "Rota de Metrô"
   - scope:
       path: ""
       type: "pages"
