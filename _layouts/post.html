@@ -9,7 +9,7 @@ layout: default
   {% if page.labels %}
     {% for label in page.labels %}
       {% if label contains "Linha" %}
-      <a href="{{ '/todos-os-posts.html' | prepend: site.baseurl }}">{{ label }}</a>
+      <a href="{{ label | slugify: 'latin' | prepend: '/' | append: '.html' | prepend: site.baseurl }}">{{ label }}</a>
       <span class="breadcrumb-sep">›</span>
       {% break %}
       {% endif %}
@@ -29,7 +29,11 @@ layout: default
       {% if page.labels %}
         <span class="post-labels">
           {% for label in page.labels %}
+            {% if label contains "Linha" %}
+            <a href="{{ label | slugify: 'latin' | prepend: '/' | append: '.html' | prepend: site.baseurl }}" class="label-tag">{{ label }}</a>
+            {% else %}
             <a href="{{ '/todos-os-posts.html' | prepend: site.baseurl }}" class="label-tag">{{ label }}</a>
+            {% endif %}
           {% endfor %}
         </span>
       {% endif %}
@@ -179,8 +183,9 @@ layout: default
     "dateModified": "{{ page.date | date_to_xmlschema }}",
     {% if page.image %}"image": "{{ page.image }}",{% endif %}
     "author": {
-      "@type": "Person",
-      "name": "{{ site.author }}"
+      "@type": "Organization",
+      "name": "{{ site.title }}",
+      "url": "{{ site.url }}/p/sobre.html"
     },
     "publisher": {
       "@type": "Organization",

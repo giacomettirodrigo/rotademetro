@@ -58,7 +58,9 @@ URLS = [
     f"{BASE_URL}/2026/05/bairro-liberdade-metro-guia-japao-sao-paulo.html",
     f"{BASE_URL}/2026/05/parque-ibirapuera-metro-brigadeiro.html",
     f"{BASE_URL}/2026/05/feira-artes-praca-republica-metro-republica.html",
-    f"{BASE_URL}/2026/05/japan-house-sp-o-que-fazer-saindo-do.html",
+    f"{BASE_URL}/2026/05/japan-house-sp-metro-paraiso.html",
+    f"{BASE_URL}/2026/05/beco-do-batman-metro-vila-madalena.html",
+    f"{BASE_URL}/2026/05/ccsp-o-que-fazer-no-centro-cultural.html",
 
     # Posts — 2026 June
     f"{BASE_URL}/2026/06/metro-moema-linha-5-lilas-ibirapuera-pavilhao-japones.html",
@@ -73,15 +75,17 @@ URLS = [
     f"{BASE_URL}/2026/06/mercado-de-pinheiros-metro-faria-lima.html",
     f"{BASE_URL}/2026/06/higienopolis-metro-higienopolis-mackenzie.html",
     f"{BASE_URL}/2026/06/santa-cecilia-metro-guia-bairro.html",
-    f"{BASE_URL}/2026/06/museu-ipiranga-parque-independencia-metro-linha-5.html",
 
-    # Posts — 2026 July (scheduled — submit after they go live)
+    # Posts — 2026 July
     f"{BASE_URL}/2026/07/farol-santander-metro-sao-bento.html",
     f"{BASE_URL}/2026/07/arena-corinthians-metro-itaquera.html",
     f"{BASE_URL}/2026/07/santo-amaro-metro-linha-5-lilas.html",
     f"{BASE_URL}/2026/07/parque-estadual-cantareira-metro-tucuruvi.html",
     f"{BASE_URL}/2026/07/bras-feira-da-madrugada-metro.html",
     f"{BASE_URL}/2026/07/museu-do-crime-metro-santa-cecilia.html",
+    f"{BASE_URL}/2026/07/museu-do-futebol-metro-higienopolis-mackenzie.html",
+    f"{BASE_URL}/2026/07/museu-arte-sacra-metro-tiradentes.html",
+    f"{BASE_URL}/2026/07/sala-sao-paulo-metro-luz.html",
 ]
 
 # Deduplicate

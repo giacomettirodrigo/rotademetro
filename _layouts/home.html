@@ -47,7 +47,7 @@ layout: default
   <section class="home-section line-section">
     <h2 class="section-title line-title">
       <span class="line-dot" style="background:{{ line_color }}"></span>
-      {{ line }}
+      <a href="{{ line | slugify: 'latin' | prepend: '/' | append: '.html' | prepend: site.baseurl }}" style="color: inherit; text-decoration: none;">{{ line }}</a>
     </h2>
     <div class="post-list">
       {% for post in line_posts %}
