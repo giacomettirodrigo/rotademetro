@@ -1,0 +1,41 @@
+name: Keepalive — mantém os workflows agendados ativos
+
+# Por que este workflow existe:
+# O GitHub desativa automaticamente workflows agendados (cron) em repositórios
+# públicos após 60 dias sem atividade no repositório. O deploy do site
+# (.github/workflows/jekyll.yml) depende de cron ter/qui/sáb para publicar os
+# posts com data futura na data certa. Se o cron for desativado, os posts
+# agendados simplesmente não entram no ar.
+#
+# Execuções de workflow NÃO contam como atividade — só commits contam.
+# Este job faz um commit vazio por mês, o que zera o contador de 60 dias.
+#
+# Observação: o push feito com o GITHUB_TOKEN padrão não dispara outros
+# workflows, então não há risco de loop com o jekyll.yml.
+
+on:
+  schedule:
+    - cron: '0 5 1 * *'   # dia 1 de cada mês, 05:00 UTC
+  workflow_dispatch:      # permite rodar manualmente pela aba Actions
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "keepalive"
+  cancel-in-progress: false
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Commit vazio para renovar a atividade do repositório
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit --allow-empty -m "chore(keepalive): mantém os workflows agendados ativos [skip ci]"
+          git push origin HEAD:${GITHUB_REF_NAME}
